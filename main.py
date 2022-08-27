@@ -2,8 +2,10 @@ import b as binance
 import time
 import xlwings as xw
 from playsound import playsound
-
-binance.set(open("key.txt", "r").read())
+a = open("key.txt", "r")
+key = a.readline()
+secret = a.readline()
+binance.set(key, secret)
 
 def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, buy_sell, counter):
     import time
@@ -17,7 +19,7 @@ def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, bu
 
 
 
-xlsht = xw.Book('btc-bot.xlsx').sheets[0]
+xlsht = xw.Book('cryptoalgo.xlsx').sheets[0]
 coin = "BTCUSDT"
 threshold = float(input("Enter the threshold value: "))
 total_money = float(input("Enter the total money to invest: "))
@@ -89,7 +91,7 @@ while True:
     if xlsht.range('J4').value == 0:
         last_traded_price = price
 
-        
+
     n = xlsht.range(f'J6').value
     threshold = xlsht.range(f'J5').value
     xlsht.range('J2').value = price
