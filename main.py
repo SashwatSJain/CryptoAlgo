@@ -8,7 +8,6 @@ secret = a.readline()
 binance.set(key, secret)
 
 def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, buy_sell, counter):
-    import time
     sheet.range(f'A{counter}').value = time.strftime("%d/%m/%Y")
     sheet.range(f'B{counter}').value = time.strftime("%H:%M:%S")
     sheet.range(f'C{counter}').value = money
@@ -19,17 +18,16 @@ def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, bu
 
 
 
-xlsht = xw.Book('cryptoalgo.xlsx').sheets[0]
+xlsht = xw.Book('cryptoalgo_log.xlsx').sheets[0]
 coin = "BTCUSDT"
 threshold = float(input("Enter the threshold value: "))
 total_money = float(input("Enter the total money to invest: "))
 n = float(input("Enter the amount of coin to buy on being triggered : "))
 add_to_excel(xlsht, "money", "totalAssetValue", "coinInPortfolio", "CostAtTrade", "buy/sell", 1)
-# priceList = binance.prices()
 price = float(binance.prices()[f'{coin}'].strip())
 last_traded_price = price
 print("price : ", price)
-cuo = 0
+cuo = 0.0
 xlcntr = 2
 timerCntr = 0
 xlsht.range('I2').value = "PriceOfOneCoin"
@@ -57,7 +55,7 @@ while True:
         total_money -= n*price
         last_traded_price = price
         add_to_excel(xlsht, total_money, total_money+(cuo*price), cuo, price, "buy", xlcntr)
-        add_to_excel(xlsht, cuo, cuo*price, coin, price, "buy", xlcntr)
+        # add_to_excel(xlsht, cuo, cuo*price, coin, price, "buy", xlcntr)
         xlcntr += 1
         playsound('Sosumi.aiff')
 
@@ -67,7 +65,7 @@ while True:
         last_traded_price = price
         total_money += last_traded_price*n
         add_to_excel(xlsht, total_money, total_money+(cuo*price), cuo, last_traded_price, "sell", xlcntr)
-        add_to_excel(xlsht, cuo, cuo*price, coin, price, "sell", xlcntr)
+        # add_to_excel(xlsht, cuo, cuo*price, coin, price, "sell", xlcntr)
         xlcntr += 1
         playsound('Sosumi.aiff')
 
