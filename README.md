@@ -2,7 +2,7 @@
 # CryptoAlgo
 A bot to trade cryptocurrencies based on live market movement.
 ## Installation
-###MacOS
+### MacOS
 ```bash
 $ pip3 install xlwings
 ```
