@@ -7,14 +7,14 @@ key = a.readline()
 secret = a.readline()
 binance.set(key, secret)
 
-def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, buy_sell, counter):
-    sheet.range(f'A{counter}').value = time.strftime("%d/%m/%Y")
-    sheet.range(f'B{counter}').value = time.strftime("%H:%M:%S")
-    sheet.range(f'C{counter}').value = money
-    sheet.range(f'D{counter}').value = totalAssetValue
-    sheet.range(f'E{counter}').value = coinInPortfolio
-    sheet.range(f'F{counter}').value = costOfTrade
-    sheet.range(f'G{counter}').value = buy_sell
+# def add_to_excel(sheet, money, totalAssetValue, coinInPortfolio, costOfTrade, buy_sell, counter):
+#     sheet.range(f'A{counter}').value = time.strftime("%d/%m/%Y")
+#     sheet.range(f'B{counter}').value = time.strftime("%H:%M:%S")
+#     sheet.range(f'C{counter}').value = money
+#     sheet.range(f'D{counter}').value = totalAssetValue
+#     sheet.range(f'E{counter}').value = coinInPortfolio
+#     sheet.range(f'F{counter}').value = costOfTrade
+#     sheet.range(f'G{counter}').value = buy_sell
 
 
 
@@ -30,17 +30,31 @@ print("price : ", price)
 cuo = 0.0
 xlcntr = 2
 timerCntr = 0
-xlsht.range('I2').value = "PriceOfOneCoin"
-xlsht.range('I3').value = "coins in portfolio"
-xlsht.range('I4').value = "last_traded_price"
-xlsht.range('I5').value = "threshold - DeltaTrigger"
-xlsht.range('I6').value = "coins per transaction"
-xlsht.range('I7').value = "xlcntr"
-xlsht.range('I8').value = "timerCntr"
-xlsht.range('I9').value = "date"
-xlsht.range('I10').value = "time"
-xlsht.range('J6').value = n
-xlsht.range('J5').value = threshold
+
+# data to add to excel on the side -  
+# live coin price, live total asset value, live coin in portfolio, threshold, xlcntr, timerCntr, coins per transaction
+
+
+xlsht.range('I2').value = "price"
+xlsht.range('I3').value = "totalAssetValue"
+xlsht.range('I4').value = "coinInPortfolio"
+xlsht.range('I5').value = "threshold"
+xlsht.range('I6').value = "xlcntr"
+xlsht.range('I7').value = "timerCntr"
+xlsht.range('I8').value = "coins per transaction"
+
+
+# xlsht.range('I2').value = "PriceOfOneCoin"
+# xlsht.range('I3').value = "coins in portfolio"
+# xlsht.range('I4').value = "last_traded_price"
+# xlsht.range('I5').value = "threshold - DeltaTrigger"
+# xlsht.range('I6').value = "coins per transaction"
+# xlsht.range('I7').value = "xlcntr"
+# xlsht.range('I8').value = "timerCntr"
+# xlsht.range('I9').value = "date"
+# xlsht.range('I10').value = "time"
+# xlsht.range('J6').value = n
+# xlsht.range('J5').value = threshold
 while True:
     timerCntr+=1
     try:
@@ -90,13 +104,14 @@ while True:
         last_traded_price = price
 
 
-    n = xlsht.range(f'J6').value
+    n = xlsht.range(f'J8').value
     threshold = xlsht.range(f'J5').value
     xlsht.range('J2').value = price
-    xlsht.range('J3').value = cuo
-    xlsht.range('J4').value = last_traded_price
-    xlsht.range('J7').value = xlcntr
-    xlsht.range('J8').value = timerCntr
+    xlsht.range('J3').value = cuo*price + total_money
+    xlsht.range('J4').value = cuo
+    xlsht.range('J6').value = xlcntr
+    xlsht.range('J7').value = timerCntr
+    xlsht.range('J8').value = n
     xlsht.range('J9').value = time.strftime("%d/%m/%Y")
     xlsht.range('J10').value = time.strftime("%H:%M:%S")
     time.sleep(1)
